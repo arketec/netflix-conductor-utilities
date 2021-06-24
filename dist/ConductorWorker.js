@@ -21,12 +21,18 @@ const _1 = require("./");
 const debug = debug_1.default('ConductorWorker[DEBUG]');
 const debugError = debug_1.default('ConductorWorker[Error]');
 class ConductorWorker extends events_1.EventEmitter {
-    constructor(options = {}) {
+    constructor(options = {}, version) {
         super();
         this.polling = false;
         this.maxConcurrent = Number.POSITIVE_INFINITY;
         this.runningTasks = [];
         this.heartbeatInterval = 300000; //default: 5 min
+        if (!version) {
+            this._version = 3;
+        }
+        else {
+            this._version = version;
+        }
         const { url = 'http://localhost:8080', apiPath = '/api', workerid = undefined, maxConcurrent, heartbeatInterval } = options;
         this.url = url;
         this.apiPath = apiPath;
@@ -62,9 +68,11 @@ class ConductorWorker extends events_1.EventEmitter {
             debug(`Polled a "${taskType}" task: `, pullTask);
             const input = pullTask.inputData;
             const { workflowInstanceId, taskId } = pullTask;
-            // Ack the Task
-            debug(`Ack the "${taskType}" task`);
-            yield this.client.post(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
+            // Ack the Task - deprecated in conductor v2.31
+            if (this._version < 2.31) {
+                debug(`Ack the "${taskType}" task`);
+                yield this.client.post(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
+            }
             // Record running task
             const runningTask = {
                 taskId,

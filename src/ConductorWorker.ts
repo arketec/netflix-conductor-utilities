@@ -35,9 +35,15 @@ class ConductorWorker<Result = void> extends EventEmitter {
   maxConcurrent: number = Number.POSITIVE_INFINITY;
   runningTasks: ProcessingTask[] = [];
   heartbeatInterval: number = 300000; //default: 5 min
+  private _version: number
 
-  constructor(options: ConductorWorkerOptions = {}) {
+  constructor(options: ConductorWorkerOptions = {}, version?: number) {
     super();
+    if (!version) {
+        this._version = 3
+    } else {
+        this._version = version
+    }
     const {url = 'http://localhost:8080', apiPath = '/api', workerid = undefined, maxConcurrent, heartbeatInterval} = options;
     this.url = url;
     this.apiPath = apiPath;
@@ -79,9 +85,11 @@ class ConductorWorker<Result = void> extends EventEmitter {
       const input = pullTask.inputData;
       const { workflowInstanceId, taskId } = pullTask;
 
-      // Ack the Task
-      debug(`Ack the "${taskType}" task`);
-      await this.client.post<boolean>(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
+      // Ack the Task - deprecated in conductor v2.31
+      if (this._version < 2.31) {
+        debug(`Ack the "${taskType}" task`);
+        await this.client.post<boolean>(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
+      }
 
       // Record running task
       const runningTask = {
