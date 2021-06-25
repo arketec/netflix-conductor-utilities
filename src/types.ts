@@ -319,7 +319,7 @@ export interface HTTPTaskMetadata extends WorkflowTaskMetadata {
             vipAddress?: string,
             asyncComplete?: boolean,
             connectionTimeOut?: number,
-            readTimeout?: number
+            readTimeOut?: number
         }
     }
 }
