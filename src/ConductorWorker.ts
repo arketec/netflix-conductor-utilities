@@ -90,7 +90,9 @@ class ConductorWorker<Result = void> extends EventEmitter {
         taskId,
       };
 
-      // Ack the Task - deprecated in conductor v2.31 https://github.com/Netflix/conductor/issues/1501#issuecomment-577431251
+      // Ack the Task - deprecated in conductor v2.31 (no longer necessary)
+      // see: https://github.com/Netflix/conductor/issues/1501#issuecomment-577431251
+      // commit: https://github.com/Netflix/conductor/pull/1941/commits/4fa0b492657c533eab70e247719362fc4eba91ef
       if (this._conductorVersion < 2.31) {
         debug(`Ack the "${taskType}" task`);
         await this.client.post<boolean>(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
