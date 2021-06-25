@@ -35,14 +35,14 @@ class ConductorWorker<Result = void> extends EventEmitter {
   maxConcurrent: number = Number.POSITIVE_INFINITY;
   runningTasks: ProcessingTask[] = [];
   heartbeatInterval: number = 300000; //default: 5 min
-  private _version: number
+  private _conductorVersion: number
 
-  constructor(options: ConductorWorkerOptions = {}, version?: number) {
+  constructor(options: ConductorWorkerOptions = {}, conductorVersion?: number) {
     super();
-    if (!version) {
-        this._version = 3
+    if (!conductorVersion) {
+        this._conductorVersion = 3
     } else {
-        this._version = version
+        this._conductorVersion = conductorVersion
     }
     const {url = 'http://localhost:8080', apiPath = '/api', workerid = undefined, maxConcurrent, heartbeatInterval} = options;
     this.url = url;
@@ -85,8 +85,13 @@ class ConductorWorker<Result = void> extends EventEmitter {
       const input = pullTask.inputData;
       const { workflowInstanceId, taskId } = pullTask;
 
-      // Ack the Task - deprecated in conductor v2.31
-      if (this._version < 2.31) {
+      const baseTaskInfo: UpdatingTaskResult = {
+        workflowInstanceId,
+        taskId,
+      };
+
+      // Ack the Task - deprecated in conductor v2.31 https://github.com/Netflix/conductor/issues/1501#issuecomment-577431251
+      if (this._conductorVersion < 2.31) {
         debug(`Ack the "${taskType}" task`);
         await this.client.post<boolean>(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
       }
@@ -99,11 +104,6 @@ class ConductorWorker<Result = void> extends EventEmitter {
       };
       this.runningTasks.push(runningTask);
       debug(`Create runningTask: `, runningTask);
-
-      const baseTaskInfo: UpdatingTaskResult = {
-        workflowInstanceId,
-        taskId,
-      };
 
       // Working
       debug('Dealing with the task:', {workflowInstanceId, taskId});
