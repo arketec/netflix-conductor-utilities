@@ -308,16 +308,18 @@ export interface EventTaskMetadata extends WorkflowTaskMetadata {
  * See [HTTP](https://netflix.github.io/conductor/configuration/systask/#http)
  */
 export interface HTTPTaskMetadata extends WorkflowTaskMetadata {
-    http_request: {
-        uri: string,
-        method: string,
-        accept?: string,
-        contentType?: string,
-        headers?: object,
-        body?: any,
-        vipAddress?: string,
-        asyncComplete?: boolean,
-    },
+    inputParameters?: {
+        http_request: {
+            uri: string,
+            method: string,
+            accept?: string,
+            contentType?: string,
+            headers?: object,
+            body?: any,
+            vipAddress?: string,
+            asyncComplete?: boolean,
+        }
+    }
 }
 
 /**
