@@ -278,7 +278,7 @@ export interface DecisionTaskMetadata extends WorkflowTaskMetadata {
     caseValueParam: string,
     decisionCases: DecisionCaseMap,
     defaultCase?: AnyWorkflowTaskMetadata[],
-    caseExpression: string,
+    caseExpression?: string,
 }
 
 /**
