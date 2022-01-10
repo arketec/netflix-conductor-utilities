@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RunningTask = exports.ConductorWorker = void 0;
 const debug_1 = __importDefault(require("debug"));
 const events_1 = require("events");
 const run_forever_1 = require("run-forever");
@@ -24,17 +23,17 @@ exports.RunningTask = RunningTask_1.default;
 const debug = debug_1.default('ConductorWorker[DEBUG]');
 const debugError = debug_1.default('ConductorWorker[Error]');
 class ConductorWorker extends events_1.EventEmitter {
-    constructor(options = {}, version) {
+    constructor(options = {}, conductorVersion) {
         super();
         this.polling = false;
         this.maxConcurrent = Number.POSITIVE_INFINITY;
         this.runningTasks = [];
         this.heartbeatInterval = 300000; //default: 5 min
-        if (!version) {
-            this._version = 3;
+        if (!conductorVersion) {
+            this._conductorVersion = 3;
         }
         else {
-            this._version = version;
+            this._conductorVersion = conductorVersion;
         }
         const { url = 'http://localhost:8080', apiPath = '/api', workerid = undefined, maxConcurrent, heartbeatInterval, runningTaskOptions = {} } = options;
         this.url = url;
@@ -72,8 +71,10 @@ class ConductorWorker extends events_1.EventEmitter {
             debug(`Polled a "${taskType}" task: `, pullTask);
             const input = pullTask.inputData;
             const { workflowInstanceId, taskId } = pullTask;
-            // Ack the Task - deprecated in conductor v2.31
-            if (this._version < 2.31) {
+            // Ack the Task - deprecated in conductor v2.31 (no longer necessary)
+            // see: https://github.com/Netflix/conductor/issues/1501#issuecomment-577431251
+            // commit: https://github.com/Netflix/conductor/pull/1941/commits/4fa0b492657c533eab70e247719362fc4eba91ef
+            if (this._conductorVersion < 2.31) {
                 debug(`Ack the "${taskType}" task`);
                 yield this.client.post(`${this.apiPath}/tasks/${taskId}/ack?workerid=${this.workerid}`);
             }

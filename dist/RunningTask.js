@@ -18,9 +18,10 @@ const debug = debug_1.default('RunningTask[DEBUG]');
 const debugError = debug_1.default('RunningTask[Error]');
 class RunningTask {
     constructor(worker, options) {
+        var _a;
         this.worker = worker;
         // keepAliveTimer options
-        const { enable = false, interval = 10000, callbackAfterSeconds = 60 } = (options === null || options === void 0 ? void 0 : options.keepAliveTimer) || {};
+        const { enable = false, interval = 10000, callbackAfterSeconds = 60 } = ((_a = options) === null || _a === void 0 ? void 0 : _a.keepAliveTimer) || {};
         this.options = Object.assign(Object.assign({}, options), { keepAliveTimer: { enable, interval, callbackAfterSeconds } });
         this.done = false;
     }

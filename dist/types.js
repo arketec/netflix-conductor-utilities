@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TaskState = exports.WorkflowStatus = exports.WorkflowTaskType = exports.TaskRetryLogic = exports.TaskTimeoutPolicy = void 0;
 var TaskTimeoutPolicy;
 (function (TaskTimeoutPolicy) {
     TaskTimeoutPolicy["retry"] = "RETRY";
@@ -29,6 +28,8 @@ var WorkflowTaskType;
     WorkflowTaskType["terminate"] = "TERMINATE";
     WorkflowTaskType["kafkaPublish"] = "KAFKA_PUBLISH";
     WorkflowTaskType["doWhile"] = "DO_WHILE";
+    WorkflowTaskType["inline"] = "INLINE";
+    WorkflowTaskType["switch"] = "SWITCH";
 })(WorkflowTaskType = exports.WorkflowTaskType || (exports.WorkflowTaskType = {}));
 var WorkflowStatus;
 (function (WorkflowStatus) {
