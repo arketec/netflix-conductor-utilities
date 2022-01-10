@@ -114,12 +114,14 @@ type AnyWorkflowTaskMetadata =
     WorkflowTaskMetadata
     | SubWorkflowTaskMetadata
     | DecisionTaskMetadata
+    | SwitchTaskMetadata
     | DynamicForkTaskMetadata
     | ForkTaskMetadata
     | EventTaskMetadata
     | HTTPTaskMetadata
     | ExclusiveJoinTaskMetadata
-    | JoinTaskMetadata;
+    | JoinTaskMetadata
+    | InlineTaskMetadata;
 
 /**
  * See: https://netflix.github.io/conductor/configuration/workflowdef/#workflow-definition
@@ -212,6 +214,8 @@ export enum WorkflowTaskType {
     terminate = 'TERMINATE',
     kafkaPublish = 'KAFKA_PUBLISH',
     doWhile = 'DO_WHILE',
+    inline = 'INLINE',
+    switch = 'SWITCH',
 }
 
 export interface WorkflowTaskMetadata {
@@ -279,6 +283,24 @@ export interface DecisionTaskMetadata extends WorkflowTaskMetadata {
     decisionCases: DecisionCaseMap,
     defaultCase?: AnyWorkflowTaskMetadata[],
     caseExpression?: string,
+}
+
+/**
+ * See [Inline](https://netflix.github.io/conductor/configuration/systask/#inline-task)
+ */
+export interface InlineTaskMetadata extends WorkflowTaskMetadata {
+    expression: string,
+    evaluatorType?: string,
+}
+
+/**
+ * See [Switch](https://netflix.github.io/conductor/configuration/systask/#switch)
+ */
+ export interface SwitchTaskMetadata extends WorkflowTaskMetadata {
+    expression: string,
+    decisionCases: DecisionCaseMap,
+    defaultCase?: AnyWorkflowTaskMetadata[],
+    evaluatorType?: string,
 }
 
 /**
