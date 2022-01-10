@@ -289,8 +289,10 @@ export interface DecisionTaskMetadata extends WorkflowTaskMetadata {
  * See [Inline](https://netflix.github.io/conductor/configuration/systask/#inline-task)
  */
 export interface InlineTaskMetadata extends WorkflowTaskMetadata {
-    expression: string,
-    evaluatorType?: string,
+    inputParameters: {
+        expression: string,
+        evaluatorType?: string,
+    }
 }
 
 /**
