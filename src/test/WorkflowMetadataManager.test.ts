@@ -1,8 +1,8 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import WorkflowMetadataManager from "../src/WorkflowMetadataManager";
-import {WorkflowTaskType} from "../src";
+import WorkflowMetadataManager from "../WorkflowMetadataManager";
+import {WorkflowTaskType} from "..";
 
 describe('WorkflowMetadata', () => {
     let sdk: WorkflowMetadataManager;

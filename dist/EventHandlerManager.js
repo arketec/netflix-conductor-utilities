@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WorkflowMetadataManager = void 0;
+exports.EventHandlerManager = void 0;
 const assert_1 = __importDefault(require("assert"));
 const axios_1 = __importDefault(require("axios"));
-class WorkflowMetadataManager {
+class EventHandlerManager {
     constructor(options = {}) {
         this.options = options;
         const { apiEndpoint } = this.options;
@@ -25,37 +25,36 @@ class WorkflowMetadataManager {
             responseType: 'json',
         });
     }
-    getAllWorkflows() {
+    getAllEventHandlers() {
         return __awaiter(this, void 0, void 0, function* () {
-            const { data } = yield this.client.get('/metadata/workflow');
+            const { data } = yield this.client.get('/event');
             return data;
         });
     }
-    getWorkflow(name, version) {
+    getEventHandlers(eventName) {
         return __awaiter(this, void 0, void 0, function* () {
-            let suffix = (version !== undefined) ? `?version=${version}` : '';
-            const url = `/metadata/workflow/${name}${suffix}`;
-            const { data } = yield this.client.get(url);
+            const url = `/event/${eventName}`;
+            const response = yield this.client.get(url);
+            const { data } = response;
             return data;
         });
     }
-    registerWorkflow(workflow) {
+    registerEventHandler(eventHandler) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.client.post(`/metadata/workflow`, workflow);
-            const workflowObject = yield this.getWorkflow(workflow.name);
-            assert_1.default(workflowObject.name === workflow.name, 'Create a workflow, but can not find workflow');
-            return workflowObject;
+            yield this.client.post(`/event`, eventHandler);
+            const eventHandlerObject = yield this.getEventHandlers(eventHandler.event);
+            assert_1.default(eventHandlerObject.find(x => x.name === eventHandler.name), 'Create a EventHandler, but can not find EventHandler');
+            return eventHandlerObject;
         });
     }
-    registerOrUpdateWorkflow(workflow) {
+    registerOrUpdateEventHandler(eventHandler) {
         return __awaiter(this, void 0, void 0, function* () {
-            const name = workflow.name;
-            const version = workflow.version;
-            yield this.client.put(`/metadata/workflow`, [workflow]);
-            return this.getWorkflow(name, version);
+            const event = eventHandler.event;
+            yield this.client.put(`/event`, eventHandler);
+            return this.getEventHandlers(event);
         });
     }
 }
-exports.WorkflowMetadataManager = WorkflowMetadataManager;
-exports.default = WorkflowMetadataManager;
-//# sourceMappingURL=WorkflowMetadataManager.js.map
+exports.EventHandlerManager = EventHandlerManager;
+exports.default = EventHandlerManager;
+//# sourceMappingURL=EventHandlerManager.js.map

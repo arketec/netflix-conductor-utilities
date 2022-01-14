@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RunningTask = exports.ConductorWorker = void 0;
 const debug_1 = __importDefault(require("debug"));
 const events_1 = require("events");
 const run_forever_1 = require("run-forever");

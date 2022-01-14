@@ -1,10 +1,10 @@
 import chai from 'chai';
 const expect = chai.expect;
-import WorkflowManager from "../src/WorkflowManager";
-import {TaskMetadataManager, WorkflowMetadataManager, ConductorWorker, WorkflowTaskType} from "../src";
+import WorkflowManager from "../WorkflowManager";
+import {TaskMetadataManager, WorkflowMetadataManager, ConductorWorker, WorkflowTaskType} from "..";
 
 function delay(ms = 10000) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         setTimeout(()=>{
             resolve();
         }, ms);

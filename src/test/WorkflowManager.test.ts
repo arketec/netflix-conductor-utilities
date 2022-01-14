@@ -1,4 +1,4 @@
-import WorkflowManager from "../src/WorkflowManager";
+import WorkflowManager from "../WorkflowManager";
 
 describe('WorkflowManager', () => {
     let sdk: WorkflowManager;

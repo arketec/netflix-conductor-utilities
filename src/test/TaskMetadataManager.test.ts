@@ -1,7 +1,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import TaskMetadataManager from "../src/TaskMetadataManager";
+import TaskMetadataManager from "../TaskMetadataManager";
 
 describe('TaskMetadata', () => {
     let sdk: TaskMetadataManager;

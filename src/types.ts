@@ -518,3 +518,47 @@ export interface StartWorkflowOptions {
     input?: object,
     taskToDomain?: object,
 }
+
+export interface EventHandlerDefinition {
+    name: string
+    event: string
+    actions: EventHandlerActionDefinition[]
+    condition?: string
+    active?: boolean
+    evaluatorType?: string
+}
+
+export interface EventHandlerActionDefinition {
+    action: EventHandlerAction,
+    start_workflow?: StartWorkflowEventHandler,
+    complete_task?: TaskUpdateEventHandler,
+    fail_task?: TaskUpdateEventHandler,
+    expandInlineJSON?: boolean
+}
+
+export interface StartWorkflowEventHandler {
+    name: string,
+    version?: number,
+    correlationId?: string,
+    input: {
+      [key: string]: any
+    },
+    taskToDomain?: {
+      [key: string]: any
+    }
+}
+
+export interface TaskUpdateEventHandler {
+    workflowId: string,
+    taskRefName: string,
+    output: {
+        [key: string]: any
+    },
+    taskId?: string
+}
+
+export enum EventHandlerAction {
+    startWorkflow = 'start_workflow',
+    completeTask = 'complete_task',
+    failTask = 'fail_task',
+}

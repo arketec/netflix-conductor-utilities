@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EventHandlerAction = exports.TaskState = exports.WorkflowStatus = exports.WorkflowTaskType = exports.TaskRetryLogic = exports.TaskTimeoutPolicy = void 0;
 var TaskTimeoutPolicy;
 (function (TaskTimeoutPolicy) {
     TaskTimeoutPolicy["retry"] = "RETRY";
@@ -50,4 +51,10 @@ var TaskState;
     TaskState["timedOut"] = "TIMED_OUT";
     TaskState["skipped"] = "SKIPPED";
 })(TaskState = exports.TaskState || (exports.TaskState = {}));
+var EventHandlerAction;
+(function (EventHandlerAction) {
+    EventHandlerAction["startWorkflow"] = "start_workflow";
+    EventHandlerAction["completeTask"] = "complete_task";
+    EventHandlerAction["failTask"] = "fail_task";
+})(EventHandlerAction = exports.EventHandlerAction || (exports.EventHandlerAction = {}));
 //# sourceMappingURL=types.js.map
