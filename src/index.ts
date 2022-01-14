@@ -4,3 +4,4 @@ export * from './TaskMetadataManager';
 export * from './WorkflowMetadataManager';
 export * from './WorkflowManager';
 export * from './ConductorWorker';
+export * from './EventHandlerManager';

@@ -15,4 +15,5 @@ __exportStar(require("./TaskMetadataManager"), exports);
 __exportStar(require("./WorkflowMetadataManager"), exports);
 __exportStar(require("./WorkflowManager"), exports);
 __exportStar(require("./ConductorWorker"), exports);
+__exportStar(require("./EventHandlerManager"), exports);
 //# sourceMappingURL=index.js.map
