@@ -1,6 +1,6 @@
 {
   "name": "netflix-conductor-utilities",
-  "version": "0.6.1",
+  "version": "0.7.4",
   "description": "Netflix conductor utilities",
   "main": "dist/index.js",
   "types": "types/main.d.ts",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/eugenechen0514/netflix-conductor-utilities",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "debug": "^4.1.1",
     "delay": "^4.3.0",
     "run-forever": "^0.2.0"
