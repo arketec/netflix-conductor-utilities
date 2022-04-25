@@ -50,7 +50,7 @@ exports.RunningTask = RunningTask_1.default;
 const debug = debug_1.default("ConductorWorker[DEBUG]");
 const debugError = debug_1.default("ConductorWorker[Error]");
 class ConductorWorker extends events_1.EventEmitter {
-  constructor(options = {}, conductorVersion) {
+  constructor(options = {}) {
     super();
     this.polling = false;
     this.maxConcurrent = Number.POSITIVE_INFINITY;
