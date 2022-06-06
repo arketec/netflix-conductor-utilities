@@ -3,7 +3,6 @@
   "version": "0.7.4",
   "description": "Netflix conductor utilities",
   "main": "dist/index.js",
-  "types": "types/main.d.ts",
   "scripts": {
     "dev": "tsc -p ./tsconfig.json -w",
     "dist": "tsc -p ./tsconfig.json -outDir ./dist",
